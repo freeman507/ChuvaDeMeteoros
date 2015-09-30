@@ -8,6 +8,7 @@ package freemanproject;
 import java.awt.Image;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
 
 /**
@@ -27,6 +28,9 @@ abstract class GameComponent {
     private long timeFinal;
     private boolean flagTime;
     int currentSprite;
+    private boolean[] keyPressed;
+    
+    public static final int keyNoPressed = 0;
     
     public static final int keyQuote = 222; //tecla aspa simples
     public static final int keyTab = 9;
@@ -112,6 +116,8 @@ abstract class GameComponent {
         sprites = new ArrayList<Image>();
         this.gameComponents = gameComponents;
         this.gameSounds = gameSounds;
+        this.keyPressed = new boolean[256];
+        Arrays.fill(keyPressed, Boolean.FALSE);
         loadSprites(this.componentName,pathSprites, numSprites);
     }
     
@@ -145,6 +151,18 @@ abstract class GameComponent {
         this.currentSprite = currentSprite;
     }
     
+    public void setGameComponentAddActionKey(int codAction) {
+        keyPressed[codAction] = true;
+    }
+    
+    public void setGameComponentRemoveActionKey(int codAction) {
+        keyPressed[codAction] = false;
+    }
+    
+    public void setGameComponentNoActionKey() {
+        keyPressed[255] = true;
+    }
+    
     public String getGameComponentName() {
         return componentName;
     }
@@ -171,6 +189,14 @@ abstract class GameComponent {
     
     public Image getGameComponentSprite() {
         return sprites.get(currentSprite);
+    }
+    
+    public boolean getGameComponentKeyAction(int codAction) {
+        return keyPressed[codAction];
+    }
+    
+    public boolean getGameComponentNoActionKey() {
+        return keyPressed[255];
     }
     
     public void upLoadGameComponents(ArrayList<GameComponent> gameComponents, ArrayList<GameSound> gameSounds) {

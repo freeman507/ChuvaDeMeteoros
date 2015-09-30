@@ -13,6 +13,12 @@ public class SpaceShip extends GameComponent{
 
     public SpaceShip() {
         super("spaceship", "img/sprites_spaceship/", 3, 0, 600, 37, 34, null, null);
+        setGameComponentAddActionKey(keyRight);
+        setGameComponentAddActionKey(keyLeft);
+        setGameComponentAddActionKey(keyUp);
+        setGameComponentAddActionKey(keyDown);
+        setGameComponentAddActionKey(keyZ);
+        setGameComponentAddActionKey(keyNoPressed);
     }
     
     public void GameComponentAction(int codAction) {

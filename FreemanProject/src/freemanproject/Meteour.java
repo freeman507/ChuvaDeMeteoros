@@ -14,6 +14,7 @@ public class Meteour extends GameComponent{
     public Meteour () {
         super("meteour", "img/meteour/", 1, Math.round(Math.random()*971),
                 Math.round(Math.random()*-768), 53, 53, null, null);
+        setGameComponentNoActionKey();
     }
     
     public void GameComponentAction(int codAction) {

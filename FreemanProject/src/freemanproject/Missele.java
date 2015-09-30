@@ -15,6 +15,7 @@ public class Missele extends GameComponent{
     
     public Missele(float horizontalPosition, float verticalPosition, ArrayList<GameComponent> gameComponent) {
         super("missele", "img/missele/", 2, horizontalPosition, verticalPosition, 4, 15, gameComponent, null);
+        setGameComponentNoActionKey();
     }
     
     public void GameComponentAction(int codAction) {
