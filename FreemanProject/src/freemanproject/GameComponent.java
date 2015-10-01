@@ -16,21 +16,24 @@ import javax.swing.ImageIcon;
  * @author freeman
  */
 abstract class GameComponent {
-    private ArrayList<Image> sprites;
-    static ArrayList<GameComponent> gameComponents;
-    ArrayList<GameSound> gameSounds;
-    private String componentName;
-    float componentPositionHorizontal;
-    float componentPositionVertical;
-    private int componentSizeWidth;
-    private int componentSizeHeight;
-    private long time;
-    private long timeFinal;
-    private boolean flagTime;
-    int currentSprite;
-    private boolean[] keyPressed;
+    private ArrayList<Image> sprites;//Armazena Sprites(imagens) do objeto
+    static ArrayList<GameComponent> gameComponents; //referencia ao array principal
+    ArrayList<GameSound> gameSounds; //referencia ao array principal de sons
+    private String componentName; //nome ou tipo do objeto
+    float componentPositionHorizontal; //armazena a posição horizontal do componente
+    float componentPositionVertical; //armazena a posição vertical do componente
+    private int componentSizeWidth; //armazena largura do componente, utilizada no metodo de colisão
+    private int componentSizeHeight; //armazena a altura do componente, utilizada no metedo de colisão
+    private long time; //armazena o tempo corrente de execução
+    private long timeFinal; //armazena um determinado final de tempo para controle de instruções
+    private boolean flagTime; //flag para arterar timeFinal
+    int currentSprite; //indica qual imagem ou sprite o objeto deve estar
+    private boolean[] keyPressed; //armazena quais teclas estão pressionadas ou não
     
-    public static final int keyNoPressed = 0;
+    /**
+     * Constantes do teclado:
+     */
+    public static final int keyNoPressed = 0; //indica que não há teclas pressionadas
     
     public static final int keyQuote = 222; //tecla aspa simples
     public static final int keyTab = 9;
@@ -121,11 +124,20 @@ abstract class GameComponent {
         loadSprites(this.componentName,pathSprites, numSprites);
     }
     
+    
+    /**
+     * Carrega as imagens ou sprites para o componente
+     * @param componentName
+     * @param pathSprites
+     * @param numSprites 
+     */
     public void loadSprites(String componentName, String pathSprites, int numSprites)
     {
         for(int i=0;i<numSprites;i++)
             sprites.add(new ImageIcon(pathSprites+componentName+i+".png").getImage());
     }
+    
+    //getters e setters, inicio
     
     public void setGameComponentName(String name) {
         componentName = name;
@@ -199,11 +211,24 @@ abstract class GameComponent {
         return keyPressed[255];
     }
     
+    //getters e setters, fim.
+    
+    /**
+     * atualiza os componentes e suas referencias, importante para o metodo de colisão
+     * @param gameComponents
+     * @param gameSounds 
+     */
     public void upLoadGameComponents(ArrayList<GameComponent> gameComponents, ArrayList<GameSound> gameSounds) {
         this.gameComponents = gameComponents;
         this.gameSounds = gameSounds;
     }
     
+    /**
+     * Testa se há colisao entre dois componentes, se houver retorna true
+     * @param a
+     * @param b
+     * @return 
+     */
     public boolean GameComponentColision(GameComponent a, GameComponent b) {
       if((((a.getGameComponentPositionHorizontal() <= (b.getGameComponentPositionHorizontal() + b.getGameComponentSizeWidth())) 
               && (a.getGameComponentPositionHorizontal() >= b.getGameComponentPositionHorizontal()))
@@ -212,20 +237,36 @@ abstract class GameComponent {
                 && ((a.getGameComponentPositionVertical()<=(b.getGameComponentPositionVertical() + b.getGameComponentSizeHeight())) 
               && (a.getGameComponentPositionVertical()+a.getGameComponentSizeHeight())>=(b.getGameComponentPositionVertical())))
             return true;
+      else if((((b.getGameComponentPositionHorizontal() <= (a.getGameComponentPositionHorizontal() + a.getGameComponentSizeWidth())) 
+              && (b.getGameComponentPositionHorizontal() >= a.getGameComponentPositionHorizontal()))
+                || ((b.getGameComponentPositionHorizontal() + b.getGameComponentSizeWidth()) >= a.getGameComponentPositionHorizontal()) 
+              && (b.getGameComponentPositionHorizontal() + b.getGameComponentSizeWidth()) <= (a.getGameComponentPositionHorizontal() + a.getGameComponentSizeWidth()))
+                && ((b.getGameComponentPositionVertical()<=(a.getGameComponentPositionVertical() + a.getGameComponentSizeHeight())) 
+              && (b.getGameComponentPositionVertical()+b.getGameComponentSizeHeight())>=(a.getGameComponentPositionVertical())))
+            return true;
         else
             return false;
     }
     
-    public boolean GameComponentColisionWithType(String nameComponent) {
+    /**
+     * Retorna a referencia de um determinado tipo de objeto em colisão
+     * @param nameComponent
+     * @return 
+     */
+    public GameComponent GameComponentColisionWithType(String nameComponent) throws NoGameComponentFoundExcetion{
         for(int i=0; i<gameComponents.size();i++) {
             if(gameComponents.get(i).getGameComponentName().equals(nameComponent))
                 if(GameComponentColision(gameComponents.get(i), this)) {
-                    return true;
+                    return gameComponents.get(i);
                 }
         }
-        return false;
+        return null;
     }
     
+    /**
+     * Para o tempo, NAO FUNCIONA!
+     * @param time 
+     */
     public void stopTime(int time) {
         Thread t = new Thread();
         t.start();
@@ -235,6 +276,11 @@ abstract class GameComponent {
         }catch(Exception ex){}
     }
     
+    /**
+     * Faz um intervalo de tempo, retorna false quando acaba o intervalo
+     * @param wait
+     * @return 
+     */
     public boolean GameComponentWait(long wait) {
         if(!flagTime) {
             timeFinal = System.currentTimeMillis() + wait;
@@ -249,6 +295,11 @@ abstract class GameComponent {
         }
     }
     
+    /**
+     * reproduz e faz o controle de som
+     * @param gameSound som a ser referenciado
+     * @param looping  verdadeiro para o som ficar em repetição
+     */
     public void GameComponentPlaySound(GameSound gameSound, boolean looping)
     {
         if(gameSound.getGameSoundEnable()) {
@@ -260,7 +311,18 @@ abstract class GameComponent {
         }
     }
     
+    /**
+     * Metodo em que o aluno ou academico deve sobreescrever para o comportamento
+     * do componente
+     * @param codAction referencia a uma tecla capturada.
+     */
     public void GameComponentAction(int codAction) {
        
+    }
+    
+    public class NoGameComponentFoundExcetion extends Exception {
+        public NoGameComponentFoundExcetion() {
+            super("Not found GameComponent");
+        }
     }
 }

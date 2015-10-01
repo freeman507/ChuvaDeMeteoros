@@ -18,6 +18,7 @@ public class Missele extends GameComponent{
         setGameComponentNoActionKey();
     }
     
+    @Override
     public void GameComponentAction(int codAction) {
         float y = getGameComponentPositionVertical();
         if(y>=0)

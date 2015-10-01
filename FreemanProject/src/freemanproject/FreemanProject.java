@@ -11,10 +11,6 @@ public class FreemanProject {
         gameSounds = new ArrayList<GameSound>();
         gameComponents = new ArrayList<GameComponent>();
         
-        GameSound spacegun = new GameSound("audio/spacegun.wav");
-        
-        gameSounds.add(spacegun);
-        
         BackGround backGround = new BackGround();
         SpaceShip spaceShip = new SpaceShip();
         
@@ -23,8 +19,8 @@ public class FreemanProject {
         for(int i=0;i<10;i++)
             gameComponents.add(new Meteour());
         
-        
-        
+        GameSound spacegun = new GameSound("audio/spacegun.wav");
+        gameSounds.add(spacegun);
         new NewGame().buildGame("chuva de meteoros");
     }
 }

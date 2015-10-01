@@ -21,6 +21,7 @@ public class SpaceShip extends GameComponent{
         setGameComponentAddActionKey(keyNoPressed);
     }
     
+    @Override
     public void GameComponentAction(int codAction) {
         float x = getGameComponentPositionHorizontal();
         float y = getGameComponentPositionVertical();

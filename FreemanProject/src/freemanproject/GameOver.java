@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 package freemanproject;
+
 /**
  *
  * @author freeman
  */
-public class BackGround extends GameComponent {
+public class GameOver extends GameComponent{
     
-    public BackGround() {
-        super("espaco", "img/background/", 3, 0, 0, 1024, 768, null, null);
+    public GameOver() {
+        super("gameover", "img/gameover/", 1, 0, 0, 1024, 768, null, null);
     }
+    
 }

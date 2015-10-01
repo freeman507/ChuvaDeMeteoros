@@ -17,6 +17,7 @@ public class Meteour extends GameComponent{
         setGameComponentNoActionKey();
     }
     
+    @Override
     public void GameComponentAction(int codAction) {
         float y = getGameComponentPositionVertical();
         if(y<=768) {
@@ -27,11 +28,18 @@ public class Meteour extends GameComponent{
             setGameComponentPositionVertical(0);
         
         if(GameComponentColision(gameComponents.get(1), this))
-            System.exit(0);
-        
-        if(GameComponentColisionWithType("missele")) {
-            gameComponents.remove(this);
+        {
+            gameComponents.clear();
+            gameComponents.add(new GameOver());
         }
+        
+        try{
+            GameComponent g = GameComponentColisionWithType("missele");
+            if(GameComponentColision(this, g)) {
+                gameComponents.remove(g);
+                gameComponents.remove(this);
+            }
+        }catch(Exception ex){}
    }
         
     
