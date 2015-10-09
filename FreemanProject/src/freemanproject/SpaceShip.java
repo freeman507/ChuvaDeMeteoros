@@ -5,11 +5,15 @@
  */
 package freemanproject;
 
+import GameBuilder.GameComponent;
+
 /**
  *
  * @author freeman
  */
 public class SpaceShip extends GameComponent{
+    
+    private int numMetours;
 
     public SpaceShip() {
         super("spaceship", "img/sprites_spaceship/", 3, 0, 600, 37, 34, null, null);
@@ -18,7 +22,17 @@ public class SpaceShip extends GameComponent{
         setGameComponentAddActionKey(keyUp);
         setGameComponentAddActionKey(keyDown);
         setGameComponentAddActionKey(keyZ);
+        setGameComponentAddActionKey(keyX);
         setGameComponentAddActionKey(keyNoPressed);
+        numMetours = 10;
+    }
+    
+    public void setNumMetours (int numMetours) {
+        this.numMetours = numMetours;
+    }
+    
+    public int getNumMetours() {
+        return this.numMetours;
     }
     
     @Override
@@ -50,12 +64,17 @@ public class SpaceShip extends GameComponent{
         if(codAction == keyZ) {
             if(!GameComponentWait(500)) {
                 GameComponentPlaySound(gameSounds.get(0), false);
-                Missele m = new Missele(x+18,y,this.gameComponents);
+                Missele m = new Missele(x+18,y,SpaceShip.gameComponents);
                 gameComponents.add(m);
             }
             else {
                 gameSounds.get(0).setGameEnableSound(true);
             }
+        }
+        
+        if(numMetours==0) {
+            gameComponents.clear();
+            gameComponents.add(new YouWin());
         }
     }
 }

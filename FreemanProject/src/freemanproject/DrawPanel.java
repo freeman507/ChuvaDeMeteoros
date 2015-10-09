@@ -1,5 +1,6 @@
 package freemanproject;
 
+import GameBuilder.GameComponent;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;

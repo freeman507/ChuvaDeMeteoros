@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package freemanproject;
+
+import GameBuilder.GameComponent;
+
 /**
  *
  * @author freeman

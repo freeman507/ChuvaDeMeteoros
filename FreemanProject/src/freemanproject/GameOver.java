@@ -5,6 +5,8 @@
  */
 package freemanproject;
 
+import GameBuilder.GameComponent;
+
 /**
  *
  * @author freeman

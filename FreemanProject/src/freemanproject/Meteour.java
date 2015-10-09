@@ -5,6 +5,8 @@
  */
 package freemanproject;
 
+import GameBuilder.GameComponent;
+
 /**
  *
  * @author freeman
@@ -24,8 +26,10 @@ public class Meteour extends GameComponent{
             y+=0.3;
             setGameComponentPositionVertical(y);
         }
-        else
-            setGameComponentPositionVertical(0);
+        else {
+            setGameComponentPositionVertical(Math.round(Math.random()*-768));
+            setGameComponentPositionHorizontal(Math.round(Math.random()*971));
+        }
         
         if(GameComponentColision(gameComponents.get(1), this))
         {
@@ -36,6 +40,9 @@ public class Meteour extends GameComponent{
         try{
             GameComponent g = GameComponentColisionWithType("missele");
             if(GameComponentColision(this, g)) {
+                SpaceShip p = (SpaceShip) gameComponents.get(1);
+                int num = p.getNumMetours();
+                p.setNumMetours(--num);
                 gameComponents.remove(g);
                 gameComponents.remove(this);
             }

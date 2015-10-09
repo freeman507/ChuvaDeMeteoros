@@ -3,13 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/freeman/FreemanProject/src/freemanproject/GameComponent.java</file>
             <file>file:/home/freeman/FreemanProject/src/freemanproject/GameOver.java</file>
-            <file>file:/home/freeman/FreemanProject/src/freemanproject/Missele.java</file>
             <file>file:/home/freeman/FreemanProject/src/freemanproject/KeyBoard.java</file>
-            <file>file:/home/freeman/FreemanProject/src/freemanproject/AudioPlayer.java</file>
-            <file>file:/home/freeman/FreemanProject/src/freemanproject/FreemanProject.java</file>
+            <file>file:/home/freeman/FreemanProject/src/freemanproject/YouWin.java</file>
             <file>file:/home/freeman/FreemanProject/src/freemanproject/ReadKeyboard.java</file>
+            <file>file:/home/freeman/FreemanProject/src/freemanproject/GameSound.java</file>
+            <file>file:/home/freeman/FreemanProject/src/freemanproject/NewGame.java</file>
+            <file>file:/home/freeman/FreemanProject/src/freemanproject/GameComponent.java</file>
+            <file>file:/home/freeman/FreemanProject/src/freemanproject/Missele.java</file>
+            <file>file:/home/freeman/FreemanProject/src/freemanproject/AudioPlayer.java</file>
+            <file>file:/home/freeman/FreemanProject/src/freemanproject/DrawPanel.java</file>
+            <file>file:/home/freeman/FreemanProject/src/freemanproject/FreemanProject.java</file>
             <file>file:/home/freeman/FreemanProject/src/freemanproject/SpaceShip.java</file>
             <file>file:/home/freeman/FreemanProject/src/freemanproject/BackGround.java</file>
             <file>file:/home/freeman/FreemanProject/src/freemanproject/Meteour.java</file>

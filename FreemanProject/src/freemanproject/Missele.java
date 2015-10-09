@@ -5,6 +5,7 @@
  */
 package freemanproject;
 
+import GameBuilder.GameComponent;
 import java.util.ArrayList;
 
 /**

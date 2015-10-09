@@ -1,26 +1,30 @@
 package freemanproject;
 
+import GameBuilder.GameSound;
+import GameBuilder.NewGame;
+import GameBuilder.GameComponent;
 import java.util.ArrayList;
 
 public class FreemanProject {
     
-    static ArrayList<GameComponent> gameComponents;
-    static ArrayList<GameSound> gameSounds;
+    static ArrayList<GameComponent> gameComponent;
+    static ArrayList<GameSound> gameSound;
     
     public static void main(String[] args) {
-        gameSounds = new ArrayList<GameSound>();
-        gameComponents = new ArrayList<GameComponent>();
+        
+        gameSound = new ArrayList<GameSound>();
+        gameComponent = new ArrayList<GameComponent>();
         
         BackGround backGround = new BackGround();
         SpaceShip spaceShip = new SpaceShip();
         
-        gameComponents.add(backGround);
-        gameComponents.add(spaceShip);
+        gameComponent.add(backGround);
+        gameComponent.add(spaceShip);
         for(int i=0;i<10;i++)
-            gameComponents.add(new Meteour());
+            gameComponent.add(new Meteour());
         
         GameSound spacegun = new GameSound("audio/spacegun.wav");
-        gameSounds.add(spacegun);
-        new NewGame().buildGame("chuva de meteoros");
+        gameSound.add(spacegun);
+        new NewGame().buildGame("chuva de meteoros",gameComponent,gameSound);
     }
 }
