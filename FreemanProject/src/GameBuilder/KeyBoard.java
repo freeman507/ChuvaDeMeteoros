@@ -2,71 +2,54 @@
 package GameBuilder;
 
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Classe que implementa a interface KeyListener
- * <br>O objetivo dela e ler, em qualquer momento, uma tecla que o usuário
+ * Classe que implementa a interface KeyListener <br>
+ * O objetivo dela e ler, em qualquer momento, uma tecla que o usuário
  * digitar<br>
  * e guardar o código ANSI dela em uma váriavel
  */
 public class KeyBoard implements KeyListener {
 
-    //Vetor que guarda quais teclas estãoapertadas  
-    private static boolean[] TeclasPressionadas = new boolean[256];
+	private static List<Integer> teclas;
+	
+	public KeyBoard() {
+		teclas = new ArrayList<>();
+	}
+	
+	public List<Integer> getTeclas() {
+		return teclas;
+	}
+	
+	public void keyPressed(KeyEvent e) {
+		if (!teclas.contains(e.getKeyCode())) {
+			teclas.add(e.getKeyCode());
+		}
+	}
 
-    /**
-     * Função que é disparada quando o usuário digita qualquer
-     * <br> tecla, mesmo que fora de uma leitura.
-     * <br> Ela guarda a tecla que o usuário digitou.
-     */
-    public KeyBoard() {
-        for (int i = 0; i < 256; i++) {
-            TeclasPressionadas[i] = false;
-        }
-    }
+	/**
+	 * Função que é disparada quando o usuário solta uma tecla que ele apertou <br>
+	 * Ela atualiza o valor da variável funcionou
+	 */
+	public void keyReleased(KeyEvent e) {
+		for (int i = 0; i < teclas.size(); i++) {
+			if (teclas.get(i) == e.getKeyCode()) {
+				teclas.remove(i);
+			}
+		}
+	}
+	
+	public void limpaTeclas() {
+		teclas = new ArrayList<>();
+	}
 
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() < 256) {
-            TeclasPressionadas[e.getKeyCode()] = true;
-        }
-    }
+	/**
+	 * Função que é dispara enquanto o usuário está com uma tecla pressionada
+	 */
+	public void keyTyped(KeyEvent e) {
+	}
 
-    /**
-     * Função que é disparada quando o usuário solta uma tecla que ele apertou
-     * <br>Ela atualiza o valor da variável funcionou
-     */
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() < 256) {
-            TeclasPressionadas[e.getKeyCode()] = false;
-        }
-
-    }
-
-    /**
-     * Função que é dispara enquanto o usuário está com uma tecla pressionada
-     */
-    public void keyTyped(KeyEvent e) {
-    }
-
-    /**
-     * Função usada para fazer a interface com o programador que<br>
-     * usar esta classe.
-     *
-     * @return <code>CodTecla</code> - o valor ANSI da última tecla digitada
-     * pelo usuário
-     */
-    public static boolean EstaPressionada(int Tecla) {
-        return TeclasPressionadas[Tecla];
-    }
-    
-    public static boolean nenhumaPressionada()
-    {
-        for(int i=0;i<256;i++)
-        {
-            if(TeclasPressionadas[i])
-                return false;
-        }
-        return true;
-    }
 
 }

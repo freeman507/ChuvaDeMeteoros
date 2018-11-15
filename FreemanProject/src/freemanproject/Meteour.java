@@ -5,50 +5,48 @@
  */
 package freemanproject;
 
+import java.util.List;
+
 import GameBuilder.GameComponent;
 
 /**
  *
  * @author freeman
  */
-public class Meteour extends GameComponent{
-    
-    public Meteour () {
-        super("meteour", "img/meteour/", 1, Math.round(Math.random()*971),
-                Math.round(Math.random()*-768), 53, 53, null, null);
-        setGameComponentNoActionKey();
-    }
-    
-    @Override
-    public void GameComponentAction(int codAction) {
-        float y = getGameComponentPositionVertical();
-        if(y<=768) {
-            y+=0.3;
-            setGameComponentPositionVertical(y);
-        }
-        else {
-            setGameComponentPositionVertical(Math.round(Math.random()*-768));
-            setGameComponentPositionHorizontal(Math.round(Math.random()*971));
-        }
-        
-        if(GameComponentColision(gameComponents.get(1), this))
-        {
-            gameComponents.clear();
-            gameComponents.add(new GameOver());
-        }
-        
-        try{
-            GameComponent g = GameComponentColisionWithType("missele");
-            if(GameComponentColision(this, g)) {
-                SpaceShip p = (SpaceShip) gameComponents.get(1);
-                int num = p.getNumMetours();
-                p.setNumMetours(--num);
-                gameComponents.remove(g);
-                gameComponents.remove(this);
-            }
-        }catch(Exception ex){}
-   }
-        
-    
-    
+public class Meteour extends GameComponent {
+
+	public Meteour() {
+		super("meteour", "img/meteour/", 1, Math.round(Math.random() * 971), Math.round(Math.random() * -768), 53, 53);
+		setGameComponentNoActionKey();
+	}
+
+	@Override
+	public void GameComponentAction(List<Integer> teclas) {
+		float y = getGameComponentPositionVertical();
+		if (y <= 768) {
+			y += 0.3;
+			setGameComponentPositionVertical(y);
+		} else {
+			setGameComponentPositionVertical(Math.round(Math.random() * -768));
+			setGameComponentPositionHorizontal(Math.round(Math.random() * 971));
+		}
+
+		if (GameComponentColision(gameComponents.get(1), this)) {
+			gameComponents.clear();
+			gameComponents.add(new GameOver());
+		}
+
+		try {
+			GameComponent g = GameComponentColisionWithType("missele");
+			if (GameComponentColision(this, g)) {
+				SpaceShip p = (SpaceShip) gameComponents.get(1);
+				int num = p.getNumMetours();
+				p.setNumMetours(--num);
+				gameComponents.remove(g);
+				gameComponents.remove(this);
+			}
+		} catch (Exception ex) {
+		}
+	}
+
 }

@@ -14,6 +14,6 @@ import GameBuilder.GameComponent;
 public class BackGround extends GameComponent {
     
     public BackGround() {
-        super("espaco", "img/background/", 3, 0, 0, 1024, 768, null, null);
+        super("espaco", "img/background/", 3, 0, 0, 1024, 768);
     }
 }

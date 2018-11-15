@@ -6,9 +6,10 @@
 package GameBuilder;
 
 import java.awt.Image;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.ImageIcon;
 
 /**
@@ -16,15 +17,19 @@ import javax.swing.ImageIcon;
  * @author freeman
  */
 public abstract class GameComponent {
-    private ArrayList<Image> sprites;//Armazena Sprites(imagens) do objeto
-    public static ArrayList<GameComponent> gameComponents; //referencia ao array principal
-    public ArrayList<GameSound> gameSounds; //referencia ao array principal de sons
+	
+	protected Long idGameComponent;
+    
+	protected ArrayList<GameComponent> gameComponents; //referencia ao array principal
+    protected ArrayList<GameSound> gameSounds; //referencia ao array principal de sons
+	
+	private ArrayList<Image> sprites;//Armazena Sprites(imagens) do objeto
     private String componentName; //nome ou tipo do objeto
     private float componentPositionHorizontal; //armazena a posição horizontal do componente
     private float componentPositionVertical; //armazena a posição vertical do componente
     private int componentSizeWidth; //armazena largura do componente, utilizada no metodo de colisão
     private int componentSizeHeight; //armazena a altura do componente, utilizada no metedo de colisão
-    private long time; //armazena o tempo corrente de execução
+    
     private long timeFinal; //armazena um determinado final de tempo para controle de instruções
     private boolean flagTime; //flag para arterar timeFinal
     private int currentSprite; //indica qual imagem ou sprite o objeto deve estar
@@ -105,7 +110,7 @@ public abstract class GameComponent {
     public static final int keyZ = 90;
     
     protected GameComponent(String name, String pathSprites, int numSprites,float positionHorizontal,
-            float positionVertical, int width, int height, ArrayList<GameComponent> gameComponents, ArrayList<GameSound> gameSounds)
+            float positionVertical, int width, int height)
     {
         componentName = name;
         componentPositionHorizontal = positionHorizontal;
@@ -114,15 +119,36 @@ public abstract class GameComponent {
         componentSizeHeight = height;
         currentSprite = 0;
         flagTime = false;
-        time = 0;
         timeFinal =0;
         sprites = new ArrayList<Image>();
-        this.gameComponents = gameComponents;
-        this.gameSounds = gameSounds;
         this.keyPressed = new boolean[256];
         Arrays.fill(keyPressed, Boolean.FALSE);
         loadSprites(this.componentName,pathSprites, numSprites);
     }
+    
+    public void setIdGameComponent(Long idGameComponent) {
+		this.idGameComponent = idGameComponent;
+	}
+    
+    public Long getIdGameComponent() {
+		return idGameComponent;
+	}
+    
+    public ArrayList<GameComponent> getGameComponents() {
+		return gameComponents;
+	}
+    
+    public void setGameComponents(ArrayList<GameComponent> gameComponents) {
+		this.gameComponents = gameComponents;
+	}
+    
+    public ArrayList<GameSound> getGameSounds() {
+		return gameSounds;
+	}
+    
+    public void setGameSounds(ArrayList<GameSound> gameSounds) {
+		this.gameSounds = gameSounds;
+	}
     
     
     /**
@@ -316,11 +342,12 @@ public abstract class GameComponent {
      * do componente
      * @param codAction referencia a uma tecla capturada.
      */
-    public void GameComponentAction(int codAction) {
+    public void GameComponentAction(List<Integer> teclas) {
        
     }
     
-    public class NoGameComponentFoundExcetion extends Exception {
+    @SuppressWarnings("serial")
+	public class NoGameComponentFoundExcetion extends Exception {
         public NoGameComponentFoundExcetion() {
             super("Not found GameComponent");
         }

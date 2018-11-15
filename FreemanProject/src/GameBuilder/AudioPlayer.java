@@ -7,7 +7,6 @@ package GameBuilder;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.net.URL;
 
 import sun.audio.AudioData;
 import sun.audio.AudioDataStream;
@@ -21,9 +20,10 @@ public class AudioPlayer {
     private ContinuousAudioDataStream continuousaudiostream;
 
     public AudioPlayer(File wav) {
+    	AudioStream audioStream;
         try {
             FileInputStream fis = new FileInputStream(wav);
-            AudioStream audioStream = new AudioStream(fis);
+            audioStream = new AudioStream(fis);
             audiodata = audioStream.getData();
             audiostream = null;
             continuousaudiostream = null;

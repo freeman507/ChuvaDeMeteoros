@@ -5,76 +5,76 @@
  */
 package freemanproject;
 
+import java.util.List;
+
 import GameBuilder.GameComponent;
 
 /**
  *
  * @author freeman
  */
-public class SpaceShip extends GameComponent{
-    
-    private int numMetours;
+public class SpaceShip extends GameComponent {
 
-    public SpaceShip() {
-        super("spaceship", "img/sprites_spaceship/", 3, 0, 600, 37, 34, null, null);
-        setGameComponentAddActionKey(keyRight);
-        setGameComponentAddActionKey(keyLeft);
-        setGameComponentAddActionKey(keyUp);
-        setGameComponentAddActionKey(keyDown);
-        setGameComponentAddActionKey(keyZ);
-        setGameComponentAddActionKey(keyX);
-        setGameComponentAddActionKey(keyNoPressed);
-        numMetours = 10;
-    }
-    
-    public void setNumMetours (int numMetours) {
-        this.numMetours = numMetours;
-    }
-    
-    public int getNumMetours() {
-        return this.numMetours;
-    }
-    
-    @Override
-    public void GameComponentAction(int codAction) {
-        float x = getGameComponentPositionHorizontal();
-        float y = getGameComponentPositionVertical();
-        
-        if(codAction == keyRight && x <= 987) {
-            x+=0.5;
-            setGameComponentPositionHorizontal(x);
-            setGameComponentCurrentSprite(2);
-        }
-        else if(codAction == keyLeft && x >= 0) {
-            x-=0.5;
-            setGameComponentPositionHorizontal(x);
-            setGameComponentCurrentSprite(0);
-        }
-        else if(codAction == keyUp && y >= 0) {
-            y -= 0.5;
-            setGameComponentPositionVertical(y);
-        }
-        else if(codAction == keyDown && y <= 650) {
-            y+=0.5;
-            setGameComponentPositionVertical(y);
-        }
-        else {
-            setGameComponentCurrentSprite(1);
-        }
-        if(codAction == keyZ) {
-            if(!GameComponentWait(500)) {
-                GameComponentPlaySound(gameSounds.get(0), false);
-                Missele m = new Missele(x+18,y,SpaceShip.gameComponents);
-                gameComponents.add(m);
-            }
-            else {
-                gameSounds.get(0).setGameEnableSound(true);
-            }
-        }
-        
-        if(numMetours==0) {
-            gameComponents.clear();
-            gameComponents.add(new YouWin());
-        }
-    }
+	private int numMetours;
+
+	public SpaceShip() {
+		super("spaceship", "img/sprites_spaceship/", 3, 0, 600, 37, 34);
+		numMetours = 10;
+	}
+
+	public void setNumMetours(int numMetours) {
+		this.numMetours = numMetours;
+	}
+
+	public int getNumMetours() {
+		return this.numMetours;
+	}
+
+	@Override
+	public void GameComponentAction(List<Integer> teclas) {
+		float x = getGameComponentPositionHorizontal();
+		float y = getGameComponentPositionVertical();
+
+		if (teclas.contains(keyRight) && x <= 987) {
+			x += 0.5;
+			setGameComponentPositionHorizontal(x);
+			setGameComponentCurrentSprite(2);
+		}
+
+		if (teclas.contains(keyLeft) && x >= 0) {
+			x -= 0.5;
+			setGameComponentPositionHorizontal(x);
+			setGameComponentCurrentSprite(0);
+		}
+
+		if (teclas.contains(keyUp) && y >= 0) {
+			y -= 0.5;
+			setGameComponentPositionVertical(y);
+		}
+
+		if (teclas.contains(keyDown) && y <= 650) {
+			y += 0.5;
+			setGameComponentPositionVertical(y);
+		}
+
+		if (teclas.isEmpty()) {
+			setGameComponentCurrentSprite(1);
+		}
+
+		if (teclas.contains(keyZ)) {
+			if (!GameComponentWait(500)) {
+				GameComponentPlaySound(gameSounds.get(0), false);
+				Missele m = new Missele(x + 18, y);
+				m.setGameComponents(gameComponents);
+				gameComponents.add(m);
+			} else {
+				gameSounds.get(0).setGameEnableSound(true);
+			}
+		}
+
+		if (numMetours == 0) {
+			gameComponents.clear();
+			gameComponents.add(new YouWin());
+		}
+	}
 }

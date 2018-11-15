@@ -14,7 +14,7 @@ import GameBuilder.GameComponent;
 public class GameOver extends GameComponent{
     
     public GameOver() {
-        super("gameover", "img/gameover/", 1, 0, 0, 1024, 768, null, null);
+        super("gameover", "img/gameover/", 1, 0, 0, 1024, 768);
     }
     
 }

@@ -5,29 +5,28 @@
  */
 package freemanproject;
 
+import java.util.List;
+
 import GameBuilder.GameComponent;
-import java.util.ArrayList;
 
 /**
  *
  * @author freeman
  */
-public class Missele extends GameComponent{
-    
-    public Missele(float horizontalPosition, float verticalPosition, ArrayList<GameComponent> gameComponent) {
-        super("missele", "img/missele/", 2, horizontalPosition, verticalPosition, 4, 15, gameComponent, null);
-        setGameComponentNoActionKey();
-    }
-    
-    @Override
-    public void GameComponentAction(int codAction) {
-        float y = getGameComponentPositionVertical();
-        if(y>=0)
-        {
-            y-=0.5;
-            setGameComponentPositionVertical(y);
-        }
-        else
-            gameComponents.remove(this);
-    }
+public class Missele extends GameComponent {
+
+	public Missele(float horizontalPosition, float verticalPosition) {
+		super("missele", "img/missele/", 2, horizontalPosition, verticalPosition, 4, 15);
+	}
+
+	@Override
+	public void GameComponentAction(List<Integer> teclas) {
+		float y = getGameComponentPositionVertical();
+		if (y >= 0) {
+			y -= 0.5;
+			setGameComponentPositionVertical(y);
+		} else {
+			gameComponents.remove(this);
+		}
+	}
 }

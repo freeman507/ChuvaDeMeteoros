@@ -13,6 +13,6 @@ import GameBuilder.GameComponent;
  */
 public class YouWin extends GameComponent{
     public YouWin(){
-        super("youwin", "img/youwin/", 1, 0, 0, 1024, 768, null, null);
+        super("youwin", "img/youwin/", 1, 0, 0, 1024, 768);
     }
 }
