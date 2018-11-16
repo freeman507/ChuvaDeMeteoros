@@ -31,39 +31,39 @@ public class SpaceShip extends GameComponent {
 	}
 
 	@Override
-	public void GameComponentAction(List<Integer> teclas) {
-		float x = getGameComponentPositionHorizontal();
-		float y = getGameComponentPositionVertical();
+	public void acao(List<Integer> teclas) {
+		float x = getPosicaoHorizontal();
+		float y = getPosicaoVertical();
 
-		if (teclas.contains(keyRight) && x <= 987) {
+		if (isTeclaPressionada(SETA_DIREITA, teclas) && x <= 987) {
 			x += 0.5;
-			setGameComponentPositionHorizontal(x);
-			setGameComponentCurrentSprite(2);
+			setPosicaoHorizontal(x);
+			setSpriteCorrente(2);
 		}
 
-		if (teclas.contains(keyLeft) && x >= 0) {
+		if (isTeclaPressionada(SETA_ESQUERDA, teclas) && x >= 0) {
 			x -= 0.5;
-			setGameComponentPositionHorizontal(x);
-			setGameComponentCurrentSprite(0);
+			setPosicaoHorizontal(x);
+			setSpriteCorrente(0);
 		}
 
-		if (teclas.contains(keyUp) && y >= 0) {
+		if (isTeclaPressionada(SETA_CIMA, teclas) && y >= 0) {
 			y -= 0.5;
-			setGameComponentPositionVertical(y);
+			setPosicaoVertical(y);
 		}
 
-		if (teclas.contains(keyDown) && y <= 650) {
+		if (isTeclaPressionada(SETA_BAIXO, teclas) && y <= 650) {
 			y += 0.5;
-			setGameComponentPositionVertical(y);
+			setPosicaoVertical(y);
 		}
 
 		if (teclas.isEmpty()) {
-			setGameComponentCurrentSprite(1);
+			setSpriteCorrente(1);
 		}
 
-		if (teclas.contains(keyZ)) {
-			if (!GameComponentWait(500)) {
-				GameComponentPlaySound(gameSounds.get(0), false);
+		if (isTeclaPressionada(Z, teclas)) {
+			if (!esperar(500)) {
+				reproduzirSom(gameSounds.get(0), false);
 				Missele m = new Missele(x + 18, y);
 				m.setGameComponents(gameComponents);
 				gameComponents.add(m);

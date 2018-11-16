@@ -25,7 +25,7 @@ public class ReadKeyboard implements Runnable {
 
 			try {
 				gameComponents.forEach(gameComponent -> {
-					gameComponent.GameComponentAction(teclas);
+					gameComponent.acao(teclas);
 				});
 
 				if (teclas.contains(27)) {

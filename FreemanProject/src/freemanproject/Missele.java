@@ -20,11 +20,11 @@ public class Missele extends GameComponent {
 	}
 
 	@Override
-	public void GameComponentAction(List<Integer> teclas) {
-		float y = getGameComponentPositionVertical();
+	public void acao(List<Integer> teclas) {
+		float y = getPosicaoVertical();
 		if (y >= 0) {
 			y -= 0.5;
-			setGameComponentPositionVertical(y);
+			setPosicaoVertical(y);
 		} else {
 			gameComponents.remove(this);
 		}

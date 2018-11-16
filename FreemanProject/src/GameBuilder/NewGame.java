@@ -23,7 +23,7 @@ public class NewGame {
 	public void buildGame(String gameName, ArrayList<GameComponent> gameComponents, ArrayList<GameSound> gameSounds) {
 
 		for (GameComponent gameComponent : gameComponents) {
-			gameComponent.upLoadGameComponents(gameComponents, gameSounds);
+			gameComponent.atualizaGameComponents(gameComponents, gameSounds);
 		}
 		
 		drawPanel = new DrawPanel(gameComponents);

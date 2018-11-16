@@ -24,9 +24,8 @@ public class DrawPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		for (int i = 0; i < gameComponents.size(); i++) {
 			gameComponent = gameComponents.get(i);
-			g.drawImage(gameComponent.getGameComponentSprite(),
-					Math.round(gameComponent.getGameComponentPositionHorizontal()),
-					Math.round(gameComponent.getGameComponentPositionVertical()), this);
+			g.drawImage(gameComponent.getSprite(), Math.round(gameComponent.getPosicaoHorizontal()),
+					Math.round(gameComponent.getPosicaoVertical()), this);
 		}
 	}
 }

@@ -7,7 +7,6 @@ package GameBuilder;
 
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -17,339 +16,432 @@ import javax.swing.ImageIcon;
  * @author freeman
  */
 public abstract class GameComponent {
-	
-	protected Long idGameComponent;
-    
-	protected ArrayList<GameComponent> gameComponents; //referencia ao array principal
-    protected ArrayList<GameSound> gameSounds; //referencia ao array principal de sons
-	
-	private ArrayList<Image> sprites;//Armazena Sprites(imagens) do objeto
-    private String componentName; //nome ou tipo do objeto
-    private float componentPositionHorizontal; //armazena a posição horizontal do componente
-    private float componentPositionVertical; //armazena a posição vertical do componente
-    private int componentSizeWidth; //armazena largura do componente, utilizada no metodo de colisão
-    private int componentSizeHeight; //armazena a altura do componente, utilizada no metedo de colisão
-    
-    private long timeFinal; //armazena um determinado final de tempo para controle de instruções
-    private boolean flagTime; //flag para arterar timeFinal
-    private int currentSprite; //indica qual imagem ou sprite o objeto deve estar
-    private final boolean[] keyPressed; //armazena quais teclas estão pressionadas ou não
-    
-    /**
-     * Constantes do teclado:
-     */
-    public static final int keyNoPressed = 0; //indica que não há teclas pressionadas
-    
-    public static final int keyQuote = 222; //tecla aspa simples
-    public static final int keyTab = 9;
-    public static final int keyShift = 16;
-    public static final int keyControl = 17;
-    public static final int keyAlt = 18;
-    public static final int keySpace = 32;
-    public static final int keyEnter = 10;
-    public static final int keyEquals = 61;
-    public static final int keyBackSpace = 8;
-    public static final int keySubtract = 109 ; // tecla "-" (menos ou ifem) do teclado numerico
-    public static final int keyMinus = 45;  // tecla "-" (menos ou ifem)
-    public static final int keyCapsLock = 20;
-    
-    public static final int keyRight = 39;
-    public static final int keyLeft = 37;
-    public static final int keyUp = 38;
-    public static final int keyDown = 40;
-    
-    public static final int keyF1 = 112;
-    public static final int keyF2 = 113;
-    public static final int keyF3 = 114;
-    public static final int keyF4 = 115;
-    public static final int keyF5 = 116;
-    public static final int keyF6 = 117;
-    public static final int keyF7 = 118;
-    public static final int keyF8 = 119;
-    public static final int keyF9 = 120;
-    public static final int keyF10 = 121;
-    public static final int keyF11 = 122;
-    public static final int keyF12 = 123;
-    
-    public static final int key0 = 48;
-    public static final int key1 = 49;
-    public static final int key2 = 50;
-    public static final int key3 = 51;
-    public static final int key4 = 52;
-    public static final int key5 = 53;
-    public static final int key6 = 54;
-    public static final int key7 = 55;
-    public static final int key8 = 56;
-    public static final int key9 = 57;
-    
-    public static final int keyA = 65;
-    public static final int keyB = 66;
-    public static final int keyC = 67;
-    public static final int keyD = 68;
-    public static final int keyE = 69;
-    public static final int keyF = 70;
-    public static final int keyG = 71;
-    public static final int keyH = 72;
-    public static final int keyI = 73;
-    public static final int keyJ = 74;
-    public static final int keyK = 75;
-    public static final int keyL = 76;
-    public static final int keyM = 77;
-    public static final int keyN = 78;
-    public static final int keyO = 79;
-    public static final int keyP = 80;
-    public static final int keyQ = 81;
-    public static final int keyR = 82;
-    public static final int keyS = 83;
-    public static final int keyT = 84;
-    public static final int keyU = 85;
-    public static final int keyV = 86;
-    public static final int keyW = 87;
-    public static final int keyX = 88;
-    public static final int keyY = 89;
-    public static final int keyZ = 90;
-    
-    protected GameComponent(String name, String pathSprites, int numSprites,float positionHorizontal,
-            float positionVertical, int width, int height)
-    {
-        componentName = name;
-        componentPositionHorizontal = positionHorizontal;
-        componentPositionVertical = positionVertical;
-        componentSizeWidth = width;
-        componentSizeHeight = height;
-        currentSprite = 0;
-        flagTime = false;
-        timeFinal =0;
-        sprites = new ArrayList<Image>();
-        this.keyPressed = new boolean[256];
-        Arrays.fill(keyPressed, Boolean.FALSE);
-        loadSprites(this.componentName,pathSprites, numSprites);
-    }
-    
-    public void setIdGameComponent(Long idGameComponent) {
+
+	protected Long idGameComponent; // identificador do objeto. (não é obrigatório)
+
+	protected ArrayList<GameComponent> gameComponents; // referencia ao array principal
+	protected ArrayList<GameSound> gameSounds; // referencia ao array principal de sons
+
+	private ArrayList<Image> sprites;// Armazena Sprites(imagens) do objeto
+	private String nome; // nome ou tipo do objeto
+	private float posicaoHorizontal; // armazena a posição horizontal do componente
+	private float posicaoVertical; // armazena a posição vertical do componente
+	private int largura; // armazena largura do componente, utilizada no metodo de colisão
+	private int altura; // armazena a altura do componente, utilizada no metedo de colisão
+
+	private long tempoFinal; // armazena um determinado final de tempo para controle de instruções
+	private boolean flagTempo; // flag para arterar timeFinal
+	private int spriteCorrente; // indica qual imagem ou sprite o objeto deve estar
+
+	/**
+	 * Constantes do teclado:
+	 */
+
+	public static final int ASPA = 222; // tecla aspa simples
+	public static final int TAB = 9;
+	public static final int SHIFT = 16;
+	public static final int CONTROL = 17;
+	public static final int ALT = 18;
+	public static final int ESPACO = 32;
+	public static final int ENTER = 10;
+	public static final int IGUAL = 61;
+	public static final int BACKSPACE = 8;
+	public static final int MENOS_TECLADO_NUMERICO = 109; // tecla "-" (menos ou ifem) do teclado numerico
+	public static final int MENOS = 45; // tecla "-" (menos ou ifem)
+	public static final int CAPSLOCK = 20;
+
+	public static final int SETA_DIREITA = 39;
+	public static final int SETA_ESQUERDA = 37;
+	public static final int SETA_CIMA = 38;
+	public static final int SETA_BAIXO = 40;
+
+	public static final int F1 = 112;
+	public static final int F2 = 113;
+	public static final int F3 = 114;
+	public static final int F4 = 115;
+	public static final int F5 = 116;
+	public static final int F6 = 117;
+	public static final int F7 = 118;
+	public static final int F8 = 119;
+	public static final int F9 = 120;
+	public static final int F10 = 121;
+	public static final int F11 = 122;
+	public static final int F12 = 123;
+
+	public static final int TECLA_0 = 48;
+	public static final int TECLA_1 = 49;
+	public static final int TECLA_2 = 50;
+	public static final int TECLA_3 = 51;
+	public static final int TECLA_4 = 52;
+	public static final int TECLA_5 = 53;
+	public static final int TECLA_6 = 54;
+	public static final int TECLA_7 = 55;
+	public static final int TECLA_8 = 56;
+	public static final int TECLA_9 = 57;
+
+	public static final int A = 65;
+	public static final int B = 66;
+	public static final int C = 67;
+	public static final int D = 68;
+	public static final int E = 69;
+	public static final int F = 70;
+	public static final int G = 71;
+	public static final int H = 72;
+	public static final int I = 73;
+	public static final int J = 74;
+	public static final int K = 75;
+	public static final int L = 76;
+	public static final int M = 77;
+	public static final int N = 78;
+	public static final int O = 79;
+	public static final int P = 80;
+	public static final int Q = 81;
+	public static final int R = 82;
+	public static final int S = 83;
+	public static final int T = 84;
+	public static final int U = 85;
+	public static final int V = 86;
+	public static final int W = 87;
+	public static final int X = 88;
+	public static final int Y = 89;
+	public static final int Z = 90;
+
+	/**
+	 * Costrutor do GameComponent, deve se implementado nas subclasses(classes
+	 * filhas).
+	 * 
+	 * @param nome              Nome do sprite(imagem) sem o indice.
+	 * @param caminhoSprites    Caminho do diretório que contém os sprites.
+	 * @param qauntidadeSprites Quanidade de sprites.
+	 * @param posicaoHorizontal Posisão do eixo horizontal em que o objeto deve ser
+	 *                          desenhado.
+	 * @param posicaoVertical   Posisão do eixo vertial em que o objeto deve ser
+	 *                          desenhado.
+	 * @param largura           Largura do objeto, também define o espaço horizontal
+	 *                          da área de colisão.
+	 * @param altura            Altura do objeto, também define o espaço vertial da
+	 *                          área de colisão.
+	 */
+	protected GameComponent(String nome, String caminhoSprites, int qauntidadeSprites, float posicaoHorizontal,
+			float posicaoVertical, int largura, int altura) {
+		this.nome = nome;
+		this.posicaoHorizontal = posicaoHorizontal;
+		this.posicaoVertical = posicaoVertical;
+		this.largura = largura;
+		this.altura = altura;
+		spriteCorrente = 0;
+		flagTempo = false;
+		tempoFinal = 0;
+		sprites = new ArrayList<Image>();
+		carregaSprites(this.nome, caminhoSprites, qauntidadeSprites);
+	}
+
+	/**
+	 * Adiciona um identificador ao objeto.
+	 * 
+	 * @param idGameComponent Identificador do objeto.
+	 */
+	public void setIdGameComponent(Long idGameComponent) {
 		this.idGameComponent = idGameComponent;
 	}
-    
-    public Long getIdGameComponent() {
+
+	/**
+	 * Recupera o identificador dor objeto.
+	 * 
+	 * @return idenificador do objeto.
+	 */
+	public Long getIdGameComponent() {
 		return idGameComponent;
 	}
-    
-    public ArrayList<GameComponent> getGameComponents() {
+
+	/**
+	 * Recupera a referencia dos objetos do jogo.
+	 * 
+	 * @return Retorna uma lista de GameComponents.
+	 */
+	public ArrayList<GameComponent> getGameComponents() {
 		return gameComponents;
 	}
-    
-    public void setGameComponents(ArrayList<GameComponent> gameComponents) {
+
+	/**
+	 * Adiciona ao objeto a referência de todos os objetos do jogo, pode ser usado
+	 * para adicionar mais objetos ao jogo e também remover.
+	 * 
+	 * @param gameComponents Lista de objtos do jogo.
+	 */
+	public void setGameComponents(ArrayList<GameComponent> gameComponents) {
 		this.gameComponents = gameComponents;
 	}
-    
-    public ArrayList<GameSound> getGameSounds() {
+
+	/**
+	 * Recupera a lista de sons do objeto.
+	 * 
+	 * @return
+	 */
+	public ArrayList<GameSound> getGameSounds() {
 		return gameSounds;
 	}
-    
-    public void setGameSounds(ArrayList<GameSound> gameSounds) {
+
+	/**
+	 * Adiciona uma lista de sons para o objeto.
+	 * 
+	 * @param gameSounds Lista que contém os sons.
+	 */
+	public void setGameSounds(ArrayList<GameSound> gameSounds) {
 		this.gameSounds = gameSounds;
 	}
-    
-    
-    /**
-     * Carrega as imagens ou sprites para o componente
-     * @param componentName
-     * @param pathSprites
-     * @param numSprites 
-     */
-    public void loadSprites(String componentName, String pathSprites, int numSprites)
-    {
-        for(int i=0;i<numSprites;i++)
-            sprites.add(new ImageIcon(pathSprites+componentName+i+".png").getImage());
-    }
-    
-    //getters e setters, inicio
-    
-    public void setGameComponentName(String name) {
-        componentName = name;
-    }
-    
-    public void setGameComponentPositionHorizontal(float position) {
-        componentPositionHorizontal = position;
-    }
-    
-    public void setGameComponentPositionVertical(float position) {
-        componentPositionVertical = position;
-    }
-    
-    public void setGameComponentSizeWidth(int width) {
-        componentSizeWidth = width;
-    }
-    
-    public void setGameComponentSizeHeight(int height) {
-        componentSizeHeight = height;
-    }
-    
-    public void setGameComponentCurrentSprite(int currentSprite) {
-        this.currentSprite = currentSprite;
-    }
-    
-    public void setGameComponentAddActionKey(int codAction) {
-        keyPressed[codAction] = true;
-    }
-    
-    public void setGameComponentRemoveActionKey(int codAction) {
-        keyPressed[codAction] = false;
-    }
-    
-    public void setGameComponentNoActionKey() {
-        keyPressed[255] = true;
-    }
-    
-    public String getGameComponentName() {
-        return componentName;
-    }
-    
-    public float getGameComponentPositionHorizontal() {
-        return componentPositionHorizontal;
-    }
-    
-    public float getGameComponentPositionVertical() {
-        return componentPositionVertical;
-    }
-    
-    public int getGameComponentSizeWidth() {
-        return componentSizeWidth;
-    }
-    
-    public int getGameComponentSizeHeight() {
-        return componentSizeHeight;
-    }
-    
-    public int getGameComponentCurrentSprite() {
-        return currentSprite;
-    }
-    
-    public Image getGameComponentSprite() {
-        return sprites.get(currentSprite);
-    }
-    
-    public boolean getGameComponentKeyAction(int codAction) {
-        return keyPressed[codAction];
-    }
-    
-    public boolean getGameComponentNoActionKey() {
-        return keyPressed[255];
-    }
-    
-    //getters e setters, fim.
-    
-    /**
-     * atualiza os componentes e suas referencias, importante para o metodo de colisão
-     * @param gameComponents
-     * @param gameSounds 
-     */
-    public void upLoadGameComponents(ArrayList<GameComponent> gameComponents, ArrayList<GameSound> gameSounds) {
-        this.gameComponents = gameComponents;
-        this.gameSounds = gameSounds;
-    }
-    
-    /**
-     * Testa se há colisao entre dois componentes, se houver retorna true
-     * @param a
-     * @param b
-     * @return 
-     */
-    public boolean GameComponentColision(GameComponent a, GameComponent b) {
-      if((((a.getGameComponentPositionHorizontal() <= (b.getGameComponentPositionHorizontal() + b.getGameComponentSizeWidth())) 
-              && (a.getGameComponentPositionHorizontal() >= b.getGameComponentPositionHorizontal()))
-                || ((a.getGameComponentPositionHorizontal() + a.getGameComponentSizeWidth()) >= b.getGameComponentPositionHorizontal()) 
-              && (a.getGameComponentPositionHorizontal() + a.getGameComponentSizeWidth()) <= (b.getGameComponentPositionHorizontal() + b.getGameComponentSizeWidth()))
-                && ((a.getGameComponentPositionVertical()<=(b.getGameComponentPositionVertical() + b.getGameComponentSizeHeight())) 
-              && (a.getGameComponentPositionVertical()+a.getGameComponentSizeHeight())>=(b.getGameComponentPositionVertical())))
-            return true;
-      else if((((b.getGameComponentPositionHorizontal() <= (a.getGameComponentPositionHorizontal() + a.getGameComponentSizeWidth())) 
-              && (b.getGameComponentPositionHorizontal() >= a.getGameComponentPositionHorizontal()))
-                || ((b.getGameComponentPositionHorizontal() + b.getGameComponentSizeWidth()) >= a.getGameComponentPositionHorizontal()) 
-              && (b.getGameComponentPositionHorizontal() + b.getGameComponentSizeWidth()) <= (a.getGameComponentPositionHorizontal() + a.getGameComponentSizeWidth()))
-                && ((b.getGameComponentPositionVertical()<=(a.getGameComponentPositionVertical() + a.getGameComponentSizeHeight())) 
-              && (b.getGameComponentPositionVertical()+b.getGameComponentSizeHeight())>=(a.getGameComponentPositionVertical())))
-            return true;
-        else
-            return false;
-    }
-    
-    /**
-     * Retorna a referencia de um determinado tipo de objeto em colisão
-     * @param nameComponent
-     * @return 
-     */
-    public GameComponent GameComponentColisionWithType(String nameComponent) throws NoGameComponentFoundExcetion{
-        for(int i=0; i<gameComponents.size();i++) {
-            if(gameComponents.get(i).getGameComponentName().equals(nameComponent))
-                if(GameComponentColision(gameComponents.get(i), this)) {
-                    return gameComponents.get(i);
-                }
-        }
-        return null;
-    }
-    
-    /**
-     * Para o tempo, NAO FUNCIONA!
-     * @param time 
-     */
-    public void stopTime(int time) {
-        Thread t = new Thread();
-        t.start();
-        try
-        {
-            Thread.sleep(time);
-        }catch(Exception ex){}
-    }
-    
-    /**
-     * Faz um intervalo de tempo, retorna false quando acaba o intervalo
-     * @param wait
-     * @return 
-     */
-    public boolean GameComponentWait(long wait) {
-        if(!flagTime) {
-            timeFinal = System.currentTimeMillis() + wait;
-            flagTime = true;
-        }
-        if(System.currentTimeMillis() <= timeFinal) {
-            return true;
-        }
-        else {
-            flagTime = false;
-            return false;
-        }
-    }
-    
-    /**
-     * reproduz e faz o controle de som
-     * @param gameSound som a ser referenciado
-     * @param looping  verdadeiro para o som ficar em repetição
-     */
-    public void GameComponentPlaySound(GameSound gameSound, boolean looping)
-    {
-        if(gameSound.getGameSoundEnable()) {
-            gameSound.setGameEnableSound(false);
-            if(looping)
-                gameSound.GameSoundLoopWav();
-            else
-                gameSound.GameSoundPlayWav();
-        }
-    }
-    
-    /**
-     * Metodo em que o aluno ou academico deve sobreescrever para o comportamento
-     * do componente
-     * @param codAction referencia a uma tecla capturada.
-     */
-    public void GameComponentAction(List<Integer> teclas) {
-       
-    }
-    
-    @SuppressWarnings("serial")
+
+	/**
+	 * Recupera o nome do objeto.
+	 * 
+	 * @return Nome do objeto.
+	 */
+	public String getNome() {
+		return nome;
+	}
+
+	/**
+	 * Define o nome do objeto, esse nome é usado no caminho para procurar os
+	 * sprites do objeto.
+	 * 
+	 * @param name Nome da imagem sem o indice.
+	 */
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	/**
+	 * Define a posição atual do objeto no eixo horizontal na tela.
+	 * 
+	 * @param position Posição horizontal do objeto.
+	 */
+	public void setPosicaoHorizontal(float posicaohorizontal) {
+		this.posicaoHorizontal = posicaohorizontal;
+	}
+
+	/**
+	 * Define a posição atual do objeto no eixo vertial na tela.
+	 * 
+	 * @param position Posição vertual do objeto
+	 */
+	public void setPosicaoVertical(float posicalVertical) {
+		this.posicaoVertical = posicalVertical;
+	}
+
+	/**
+	 * Define a largura em pixels do objeto, essa propriedade é usada para testar a
+	 * área de colisão.
+	 * 
+	 * @param largura Largura do objeto.
+	 */
+	public void setLargura(int largura) {
+		this.largura = largura;
+	}
+
+	/**
+	 * Define a altura em pixels do objeto, essa propriedade é usada para testar a
+	 * área de colisão.
+	 * 
+	 * @param altura Altura do objeto.
+	 */
+	public void setAltura(int altura) {
+		this.altura = altura;
+	}
+
+	/**
+	 * Define o sprite que será exibido na tela.
+	 * 
+	 * @param spriteCorrente indice do sprite.
+	 */
+	public void setSpriteCorrente(int spriteCorrente) {
+		this.spriteCorrente = spriteCorrente;
+	}
+
+	/**
+	 * Recupera a posição do eixo horizontal do objeto na tela.
+	 * 
+	 * @return Posição horizontal.
+	 */
+	public float getPosicaoHorizontal() {
+		return posicaoHorizontal;
+	}
+
+	/**
+	 * Recupera a posição do eixo vertical do objeto na tela.
+	 * 
+	 * @return Posição vertical.
+	 */
+	public float getPosicaoVertical() {
+		return posicaoVertical;
+	}
+
+	/**
+	 * Retorna a largura do objeto, essa propriedade é usada para verificar a
+	 * colisão com outros objetos.
+	 * 
+	 * @return Largura do objeto.
+	 */
+	public int getLargura() {
+		return largura;
+	}
+
+	/**
+	 * Retorna a Altura do objeto, essa propriedade é usada para verificar a colisão
+	 * com outros objetos.
+	 * 
+	 * @return Altura do objeto.
+	 */
+	public int getAltura() {
+		return altura;
+	}
+
+	/**
+	 * Retorna o indice do sprite atual do objeto.
+	 * 
+	 * @return indice do sprite.
+	 */
+	public int getSpriteCorrente() {
+		return spriteCorrente;
+	}
+
+	/**
+	 * Retorna a imagem do sprite corrente.
+	 * 
+	 * @return Imagem do sprite.
+	 */
+	public Image getSprite() {
+		return sprites.get(spriteCorrente);
+	}
+
+	/**
+	 * Carrega as imagens ou sprites para o componente
+	 * 
+	 * @param nome
+	 * @param caminhoSprites
+	 * @param quantidadeSprites
+	 */
+	public void carregaSprites(String nome, String caminhoSprites, int quantidadeSprites) {
+		for (int i = 0; i < quantidadeSprites; i++) {
+			sprites.add(new ImageIcon(caminhoSprites + nome + i + ".png").getImage());
+		}
+	}
+
+	/**
+	 * Atualiza os componentes e suas referencias, importante para o metodo de
+	 * colisão
+	 * 
+	 * @param gameComponents
+	 * @param gameSounds
+	 */
+	public void atualizaGameComponents(ArrayList<GameComponent> gameComponents, ArrayList<GameSound> gameSounds) {
+		this.gameComponents = gameComponents;
+		this.gameSounds = gameSounds;
+	}
+
+	/**
+	 * Testa se há colisao entre dois componentes, se houver retorna true
+	 * 
+	 * @param a Objeto de jogo
+	 * @param b Objeto de jogo
+	 * @return
+	 */
+	public boolean isColisao(GameComponent a, GameComponent b) {
+		if ((((a.getPosicaoHorizontal() <= (b.getPosicaoHorizontal() + b.getLargura()))
+				&& (a.getPosicaoHorizontal() >= b.getPosicaoHorizontal()))
+				|| ((a.getPosicaoHorizontal() + a.getLargura()) >= b.getPosicaoHorizontal())
+						&& (a.getPosicaoHorizontal() + a.getLargura()) <= (b.getPosicaoHorizontal() + b.getLargura()))
+				&& ((a.getPosicaoVertical() <= (b.getPosicaoVertical() + b.getAltura()))
+						&& (a.getPosicaoVertical() + a.getAltura()) >= (b.getPosicaoVertical())))
+			return true;
+		else if ((((b.getPosicaoHorizontal() <= (a.getPosicaoHorizontal() + a.getLargura()))
+				&& (b.getPosicaoHorizontal() >= a.getPosicaoHorizontal()))
+				|| ((b.getPosicaoHorizontal() + b.getLargura()) >= a.getPosicaoHorizontal())
+						&& (b.getPosicaoHorizontal() + b.getLargura()) <= (a.getPosicaoHorizontal() + a.getLargura()))
+				&& ((b.getPosicaoVertical() <= (a.getPosicaoVertical() + a.getAltura()))
+						&& (b.getPosicaoVertical() + b.getAltura()) >= (a.getPosicaoVertical())))
+			return true;
+		else
+			return false;
+	}
+
+
+	public GameComponent isColisao(String nome) throws NoGameComponentFoundExcetion {
+		for (int i = 0; i < gameComponents.size(); i++) {
+			if (gameComponents.get(i).getNome().equals(nome))
+				if (isColisao(gameComponents.get(i), this)) {
+					return gameComponents.get(i);
+				}
+		}
+		return null;
+	}
+
+	/**
+	 * Para o tempo, NAO FUNCIONA!
+	 * 
+	 * @param time
+	 */
+	public void stopTime(int time) {
+		Thread t = new Thread();
+		t.start();
+		try {
+			Thread.sleep(time);
+		} catch (Exception ex) {
+		}
+	}
+
+	/**
+	 * Faz um intervalo de tempo, retorna false quando acaba o intervalo
+	 * 
+	 * @param tempo
+	 * @return
+	 */
+	public boolean esperar(long tempo) {
+		if (!flagTempo) {
+			tempoFinal = System.currentTimeMillis() + tempo;
+			flagTempo = true;
+		}
+		if (System.currentTimeMillis() <= tempoFinal) {
+			return true;
+		} else {
+			flagTempo = false;
+			return false;
+		}
+	}
+
+	/**
+	 * reproduz e faz o controle de som
+	 * 
+	 * @param gameSound som a ser referenciado
+	 * @param looping   verdadeiro para o som ficar em repetição
+	 */
+	public void reproduzirSom(GameSound gameSound, boolean looping) {
+		if (gameSound.getGameSoundEnable()) {
+			gameSound.setGameEnableSound(false);
+			if (looping)
+				gameSound.GameSoundLoopWav();
+			else
+				gameSound.GameSoundPlayWav();
+		}
+	}
+
+	public boolean isTeclaPressionada(int tecla, List<Integer> teclas) {
+		return teclas.contains(tecla);
+	}
+
+	@SuppressWarnings("serial")
 	public class NoGameComponentFoundExcetion extends Exception {
-        public NoGameComponentFoundExcetion() {
-            super("Not found GameComponent");
-        }
-    }
+		public NoGameComponentFoundExcetion() {
+			super("Not found GameComponent");
+		}
+	}
+
+	/**
+	 * Metodo em que o aluno ou academico deve sobreescrever para o comportamento do
+	 * componente
+	 * 
+	 * @param codAction referencia a uma tecla capturada.
+	 */
+	public void acao(List<Integer> teclas) {
+
+	}
 }
