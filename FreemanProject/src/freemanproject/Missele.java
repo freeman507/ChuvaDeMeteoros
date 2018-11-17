@@ -22,11 +22,12 @@ public class Missele extends GameComponent {
 	@Override
 	public void acao(List<Integer> teclas) {
 		float y = getPosicaoVertical();
+		System.out.println(y);
 		if (y >= 0) {
 			y -= 0.5;
 			setPosicaoVertical(y);
 		} else {
-			gameComponents.remove(this);
+			FreemanProject.gameComponents.remove(this);
 		}
 	}
 }

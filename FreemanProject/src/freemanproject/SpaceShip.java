@@ -8,6 +8,7 @@ package freemanproject;
 import java.util.List;
 
 import GameBuilder.GameComponent;
+import GameBuilder.GameSound;
 
 /**
  *
@@ -16,6 +17,16 @@ import GameBuilder.GameComponent;
 public class SpaceShip extends GameComponent {
 
 	private int numMetours;
+	
+	private GameSound tiro;
+
+	public GameSound getTiro() {
+		return tiro;
+	}
+
+	public void setTiro(GameSound spacegun) {
+		this.tiro = spacegun;
+	}
 
 	public SpaceShip() {
 		super("spaceship", "img/sprites_spaceship/", 3, 0, 600, 37, 34);
@@ -63,18 +74,17 @@ public class SpaceShip extends GameComponent {
 
 		if (isTeclaPressionada(Z, teclas)) {
 			if (!esperar(500)) {
-				reproduzirSom(gameSounds.get(0), false);
+				reproduzirSom(tiro, false);
 				Missele m = new Missele(x + 18, y);
-				m.setGameComponents(gameComponents);
-				gameComponents.add(m);
+				FreemanProject.gameComponents.add(m);
 			} else {
-				gameSounds.get(0).setGameEnableSound(true);
+				habilitarSom(tiro);
 			}
 		}
 
 		if (numMetours == 0) {
-			gameComponents.clear();
-			gameComponents.add(new YouWin());
+			FreemanProject.gameComponents.clear();
+			FreemanProject.gameComponents.add(new YouWin());
 		}
 	}
 }

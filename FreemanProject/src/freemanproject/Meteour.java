@@ -15,8 +15,18 @@ import GameBuilder.GameComponent;
  */
 public class Meteour extends GameComponent {
 
+	private SpaceShip spaceship;
+
 	public Meteour() {
 		super("meteour", "img/meteour/", 1, Math.round(Math.random() * 971), Math.round(Math.random() * -768), 53, 53);
+	}
+
+	public SpaceShip getSpaceship() {
+		return spaceship;
+	}
+
+	public void setSpaceship(SpaceShip spaceship) {
+		this.spaceship = spaceship;
 	}
 
 	@Override
@@ -24,28 +34,26 @@ public class Meteour extends GameComponent {
 		float y = getPosicaoVertical();
 		if (y <= 768) {
 			y += 0.3;
-			setPosicaoVertical(y);;
+			setPosicaoVertical(y);
+			;
 		} else {
 			setPosicaoVertical(Math.round(Math.random() * -768));
 			setPosicaoHorizontal(Math.round(Math.random() * 971));
 		}
 
-		if (isColisao(gameComponents.get(1), this)) {
-			gameComponents.clear();
-			gameComponents.add(new GameOver());
+		if (isColisao(spaceship, this)) {
+			FreemanProject.gameComponents.clear();
+			FreemanProject.gameComponents.add(new GameOver());
 		}
 
-		try {
-			GameComponent g = isColisao("missele");
-			if (isColisao(this, g)) {
-				SpaceShip p = (SpaceShip) gameComponents.get(1);
-				int num = p.getNumMetours();
-				p.setNumMetours(--num);
-				gameComponents.remove(g);
-				gameComponents.remove(this);
-			}
-		} catch (Exception ex) {
+		Missele missil = (Missele) isColisao("missele");
+		if (missil != null && isColisao(this, missil)) {
+			int num = spaceship.getNumMetours();
+			spaceship.setNumMetours(--num);
+			FreemanProject.gameComponents.remove(missil);
+			FreemanProject.gameComponents.remove(this);
 		}
+
 	}
 
 }

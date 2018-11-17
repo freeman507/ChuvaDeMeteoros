@@ -12,15 +12,18 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 /**
+ * Classe principal do framework, deve ser estendida por todos os objetos do jogo,
+ * pois é através dela que os objetos criaram vida.
+ * 
+ * @author Freeman
  *
- * @author freeman
  */
 public abstract class GameComponent {
 
 	protected Long idGameComponent; // identificador do objeto. (não é obrigatório)
 
-	protected ArrayList<GameComponent> gameComponents; // referencia ao array principal
-	protected ArrayList<GameSound> gameSounds; // referencia ao array principal de sons
+	private ArrayList<GameComponent> gameComponents; // referencia ao array principal
+	private ArrayList<GameSound> gameSounds; // referencia ao array principal de sons
 
 	private ArrayList<Image> sprites;// Armazena Sprites(imagens) do objeto
 	private String nome; // nome ou tipo do objeto
@@ -346,6 +349,7 @@ public abstract class GameComponent {
 	 * @return
 	 */
 	public boolean isColisao(GameComponent a, GameComponent b) {
+
 		if ((((a.getPosicaoHorizontal() <= (b.getPosicaoHorizontal() + b.getLargura()))
 				&& (a.getPosicaoHorizontal() >= b.getPosicaoHorizontal()))
 				|| ((a.getPosicaoHorizontal() + a.getLargura()) >= b.getPosicaoHorizontal())
@@ -364,8 +368,13 @@ public abstract class GameComponent {
 			return false;
 	}
 
-
-	public GameComponent isColisao(String nome) throws NoGameComponentFoundExcetion {
+	/**
+	 * Verifica se existe colisão com um determinado tipo de GameComponent
+	 * 
+	 * @param nome Nome do tipo do GameComponent
+	 * @return Retorna a referencia do GameComponent que colidiu
+	 */
+	public GameComponent isColisao(String nome) {
 		for (int i = 0; i < gameComponents.size(); i++) {
 			if (gameComponents.get(i).getNome().equals(nome))
 				if (isColisao(gameComponents.get(i), this)) {
@@ -392,7 +401,7 @@ public abstract class GameComponent {
 	/**
 	 * Faz um intervalo de tempo, retorna false quando acaba o intervalo
 	 * 
-	 * @param tempo
+	 * @param tempo em milisegundos.
 	 * @return
 	 */
 	public boolean esperar(long tempo) {
@@ -423,23 +432,26 @@ public abstract class GameComponent {
 				gameSound.GameSoundPlayWav();
 		}
 	}
+	
+	public void habilitarSom(GameSound gameSound) {
+		gameSound.setGameEnableSound(true);
+	}
 
+	/**
+	 * Verfica se uma tecla foi pressionada.
+	 * 
+	 * @param tecla Código ou constante da tecla.
+	 * @param teclas Lista de teclas pressionadas
+	 * @return Retorna true quando a tecla está pressionada.
+	 */
 	public boolean isTeclaPressionada(int tecla, List<Integer> teclas) {
 		return teclas.contains(tecla);
 	}
 
-	@SuppressWarnings("serial")
-	public class NoGameComponentFoundExcetion extends Exception {
-		public NoGameComponentFoundExcetion() {
-			super("Not found GameComponent");
-		}
-	}
-
 	/**
-	 * Metodo em que o aluno ou academico deve sobreescrever para o comportamento do
-	 * componente
+	 * Método que faz a ação do objeto. Este método deve ser sobreescrito nas subclasses(classes filhas).
 	 * 
-	 * @param codAction referencia a uma tecla capturada.
+	 * @param teclas Lista de teclas pressionadas.
 	 */
 	public void acao(List<Integer> teclas) {
 
