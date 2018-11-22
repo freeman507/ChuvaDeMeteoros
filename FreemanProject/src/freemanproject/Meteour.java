@@ -41,13 +41,13 @@ public class Meteour extends GameComponent {
 			setPosicaoHorizontal(Math.round(Math.random() * 971));
 		}
 
-		if (isColisao(spaceship, this)) {
+		if (isColisao(spaceship)) {
 			FreemanProject.gameComponents.clear();
 			FreemanProject.gameComponents.add(new GameOver());
 		}
 
 		Missele missil = (Missele) isColisao("missele");
-		if (missil != null && isColisao(this, missil)) {
+		if (missil != null && isColisao(missil)) {
 			int num = spaceship.getNumMetours();
 			spaceship.setNumMetours(--num);
 			FreemanProject.gameComponents.remove(missil);

@@ -383,6 +383,16 @@ public abstract class GameComponent {
 		}
 		return null;
 	}
+	
+	/**
+	 * Verifica se existe colisão com um determinado objeto.
+	 * 
+	 * @param gameComponent Objeto que está ou não colidindo
+	 * @return
+	 */
+	public boolean isColisao(GameComponent gameComponent) {
+		return isColisao(gameComponent, this);
+	}
 
 	/**
 	 * Para o tempo, NAO FUNCIONA!
