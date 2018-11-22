@@ -7,7 +7,6 @@ package GameBuilder;
 
 import GameBuilder.KeyBoard;
 import GameBuilder.GameComponent;
-import freemanproject.DrawPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;

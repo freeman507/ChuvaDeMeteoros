@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 //import static freemanproject.FreemanProject.gameComponents;
 //import static freemanproject.FreemanProject.gameSounds;
-import freemanproject.DrawPanel;
 
 /**
  *

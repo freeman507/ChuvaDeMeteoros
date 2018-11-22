@@ -1,6 +1,5 @@
 package GameBuilder;
 
-import freemanproject.DrawPanel;
 import GameBuilder.GameComponent;
 import java.util.ArrayList;
 import java.util.List;

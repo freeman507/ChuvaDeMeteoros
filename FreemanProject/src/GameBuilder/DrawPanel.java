@@ -1,4 +1,4 @@
-package freemanproject;
+package GameBuilder;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
